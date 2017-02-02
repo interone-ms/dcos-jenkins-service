@@ -18,6 +18,12 @@ ENV JAVA_HOME "/usr/lib/jvm/java-7-openjdk-amd64"
 RUN apt-get update
 RUN apt-get install -y git python zip curl default-jre jq gradle ant maven
 
+RUN mkdir -p /tmp/git_stretch
+RUN cd /tmp/git_stretch && LD_LIBRARY_PATH= curl -O http://ftp.de.debian.org/debian/pool/main/g/git/git-man_2.11.0-2_all.deb
+RUN cd /tmp/git_stretch && LD_LIBRARY_PATH= curl -O http://ftp.de.debian.org/debian/pool/main/g/git/git_2.11.0-2_amd64.deb
+RUN dpkg -i /tmp/git_stretch/git-man_2.11.0-2_all.deb /tmp/git_stretch/git_2.11.0-2_amd64.deb
+RUN rm -rf /tmp/git_stretch
+
 RUN mkdir -p /var/log/nginx/jenkins
 COPY conf/nginx/nginx.conf /etc/nginx/nginx.conf
 
